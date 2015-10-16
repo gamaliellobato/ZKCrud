@@ -1,0 +1,36 @@
+<?page title="Listitem MVVM Demo with Hibernate" contentType="text/html;charset=UTF-8"?>
+<zk>
+    <style>
+        .z-listcell.red .z-listcell-cnt, .z-label.red{ color:red; }
+    </style>
+    <window title="Listitem MVVM Demo with Hibernate" border="normal"
+        apply="org.zkoss.bind.BindComposer"
+        viewModel="@id('myvm') @init('domainVMS.PersonVM')">
+        <div>
+            <button label="Add Person"
+                onClick="@command('addNewPerson')" />
+        </div>
+        <separator />
+
+        <listbox id="test" model="@load(myvm.allPersons)"
+            selectedItem="@bind(myvm.curSelectedPerson)">
+            <listhead sizable="true">
+                <listheader label="First Name" width="400px"
+                    sort="auto(firstName)" />
+                <listheader label="Last Name" width="285px"
+                    sort="auto(lastName)" />
+                <listheader label="email" width="285px"
+                    sort="auto(email)" />
+            </listhead>
+            <template name="model" var="p1">
+                <listitem onDoubleClick="@command('onDoubleClicked')">
+                    <listcell label="@load(p1.firstName)"
+                        sclass="@load(empty p1.email ?'red':'')" />
+                    <listcell label="@load(p1.lastName)"
+                        sclass="@load(empty p1.email ?'red':'')" />
+                    <listcell label="@load(p1.email)" />
+                </listitem>
+            </template>
+        </listbox>
+    </window>
+</zk>
